@@ -1,3 +1,8 @@
+# File: variables.tf
+# Description: Defines variables for Talos deployment on Proxmox.
+# Last Updated: February 15, 2025 15:32 CET
+# Created by: https://github.com/CyberCogeanu
+
 variable "cluster_name" {
   type    = string
   default = "talos_test"
