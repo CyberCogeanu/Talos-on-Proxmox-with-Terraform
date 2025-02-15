@@ -1,3 +1,8 @@
+# File: main.tf
+# Description: Main Terraform configuration for deploying Talos on Proxmox.
+# Last Updated: February 15, 2025 15:32 CET
+# Created by: https://github.com/CyberCogeanu
+
 terraform {
   required_providers {
     proxmox = {
