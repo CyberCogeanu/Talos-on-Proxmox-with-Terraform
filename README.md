@@ -10,7 +10,7 @@ This project provides a Terraform configuration to automate the deployment of a 
 
 ## Prerequisites
 
-* Terraform installed and configured.
+* Terraform installed and configured - https://github.com/CyberCogeanu/k0s-proxmox-deploy/blob/main/install_Terraform.md
 * Proxmox server with API access enabled.
 * Talos Linux installation image.
 
