@@ -1,0 +1,93 @@
+## How to Deploy a VM with Terraform and Proxmox
+
+This guide provides a comprehensive walkthrough of deploying a virtual machine (VM) using Terraform and Proxmox. We'll cover the installation and configuration of both tools, demonstrate an example setup, and address common issues you might encounter.
+
+### What is Proxmox?
+
+Proxmox Virtual Environment (VE), or PVE, is a powerful, open-source virtualization platform based on Debian Linux. It leverages KVM (Kernel-based Virtual Machine) for VMs and LXC (Linux Containers) for containerization, allowing you to run multiple operating systems and applications on a single server.
+
+**Common use cases for Proxmox include:**
+
+* Running multiple web servers on a single machine
+* Creating development and testing environments
+* Deploying cloud-based applications
+* Consolidating server resources
+
+**Key Features of Proxmox:**
+
+* **Virtual machine management:** Create, deploy, and manage VMs.
+* **Container-based virtualization:** Lightweight containers share the host OS kernel for efficient resource utilization.
+* **Software-defined storage (SDS):** Manage storage resources with features like storage pools, ZFS, and data replication.
+* **Networking:** Configure VLANs, bridges, and firewall rules for VMs and containers.
+* **Clustering support:** Create a highly available infrastructure.
+* **Proxmox Backup Server:** Enterprise-grade backup solution with incremental backups, deduplication, compression, and encryption.
+* **Web-based management interface:** Securely manage your Proxmox environment via a user-friendly web interface.
+
+### Deploying Proxmox VMs with Terraform
+
+Terraform streamlines Proxmox VM deployment by automating the creation and configuration process. Here's a step-by-step guide:
+
+1. **Install Terraform:**
+
+   If you don't have Terraform installed, you can install it on your Linux system using the following commands:
+
+   ```bash
+   curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+   sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+   sudo apt update
+   sudo apt install terraform
+   ```
+
+   For other operating systems, refer to the official Terraform website for installation instructions.
+
+2. **Set up Proxmox:**
+
+   * Download the Proxmox VE ISO image from the official website.
+   * Create a bootable USB drive or burn the ISO to a DVD.
+   * Boot your server from the installation media.
+   * Follow the on-screen prompts to install Proxmox VE.
+   * Access the Proxmox web interface at `https://your-server-ip:8006`.
+
+3. **Use API Keys for Authentication:**
+
+   To enable Terraform to manage Proxmox resources, you'll need to configure authentication. The recommended approach is to create a new user and generate API tokens:
+
+   * In the Proxmox web interface, go to **Datacenter > Permissions > Users**.
+   * Click **Add** to create a new user.
+   * Under **API Tokens**, generate a new token for the user. **Store this token securely as it won't be displayed again.**
+
+4. **Configure Terraform Proxmox Provider:**
+
+   Create a Terraform configuration file (e.g., `main.tf`) to define the Proxmox provider and your VM configurations.
+
+   ```terraform
+   provider "proxmox" {
+     pm_api_url = "https://your-proxmox-server-ip:8006/api2/json"
+     pm_user = "your-proxmox-username"
+     pm_password = "your-proxmox-password"
+     # or use API token
+     # pm_api_token = "your-proxmox-api-token"
+   }
+
+   resource "proxmox_vm_qemu" "vm" {
+     # VM configuration details
+   }
+   ```
+
+5. **Run Terraform to Create the VM:**
+
+   * Execute `terraform init` to initialize the provider.
+   * Run `terraform plan` to preview the changes.
+   * Apply the configuration with `terraform apply`.
+
+6. **Delete the VM with `terraform destroy`:**
+
+   To remove the VM, navigate to your Terraform project directory and run `terraform destroy`.
+
+### Common Issues and Troubleshooting
+
+* **API Access:** Ensure your Proxmox user has the necessary permissions to perform the required actions.
+* **Network Configuration:** Double-check your network settings in both Terraform and Proxmox to avoid connectivity problems.
+* **Resource Limitations:** Be mindful of your Proxmox server's resource availability (CPU, memory, storage) when provisioning VMs.
+
+This guide provides a foundation for deploying VMs with Terraform and Proxmox. As you delve deeper, you can explore advanced configurations, such as customizing network settings, managing storage, and implementing more complex deployments.
