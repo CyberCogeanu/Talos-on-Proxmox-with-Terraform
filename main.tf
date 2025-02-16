@@ -17,7 +17,7 @@ terraform {
 }
 
 provider "proxmox" {
-  endpoint = "https://192.168.0.2:8006/"
+  endpoint = "https://192.168.77.111:8006/"
   insecure = true # Only needed if your Proxmox server is using a self-signed certificate
 }
 
