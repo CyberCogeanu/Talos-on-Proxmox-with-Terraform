@@ -10,7 +10,8 @@ This project provides a Terraform configuration to automate the deployment of a 
 
 ## Prerequisites
 
-* Terraform installed and configured - https://github.com/CyberCogeanu/k0s-proxmox-deploy/blob/main/install_Terraform.md
+* Ubuntu Desktop 24.04.1 LTS installed and updated - https://ubuntu.com/download/desktop
+* Terraform installed and configured - https://developer.hashicorp.com/terraform/install
 * Proxmox server with API access enabled.
 * Talos Linux installation image.
 
